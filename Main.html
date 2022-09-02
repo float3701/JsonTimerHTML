@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			.green {
+				width : 100% ;
+				height : 100% ;
+				text-align : center;
+			}
+			
+			a {
+				font-size: 100px;
+				font-family : "微软雅黑" , sans-serif;
+				color : #ffffff ;
+				white-space: nowrap;
+			}
+			
+			body {
+				transition: background-color 2s;
+			}
+			
+			#nowcls {
+				font-size: 85px;
+			}
+		</style>
+		
+		<script>
+			var schedule = JSON.parse(
+				'{ "end_time" : 57600, "schedule" : [ { "start":[8,30,0], "ud":"开学", "cls":"课前", "bgc":"#000070" }, { "start":[9,0,0], "ud":"下节", "cls":"早读", "bgc":"#004040" }, { "start":[9,40,0], "ud":"下课", "cls":"第1节", "bgc":"#007000" },'
+				+' { "start":[10,20,0], "ud":"下课", "cls":"体育锻炼", "bgc":"#004040" }, { "start":[10,30,0], "ud":"上课", "cls":"下课", "bgc":"#000070" }, { "start":[11,10,0], "ud":"下课", "cls":"第2节", "bgc":"#007000" }, { "start":[11,30,0], "ud":'
+				+'"午间", "cls":"小结", "bgc":"#004040" }, { "start":[14,0,0], "ud":"开课", "cls":"午间", "bgc":"#000070" }, { "start":[14,10,0], "ud":"上课", "cls":"十分钟", "bgc":"#004040" }, { "start":[14,50,0], "ud":"下课", "cls":"第3节", "bgc":"#0'
+				+'07000" }, { "start":[15,0,0], "ud":"完成", "cls":"眼保", "bgc":"#004040" }, { "start":[15,10,0], "ud":"上课", "cls":"下课", "bgc":"#000070" }, { "start":[15,50,0], "ud":"下课", "cls":"第4节", "bgc":"#007000" }, { "start":[16,0,0], "ud'
+				+'":"放学", "cls":"小结", "bgc":"#004040" } ] }'
+			);
+			
+			
+			
+			var bodyh = document.getElementById("bd") ;
+			
+			function changebgc(color) {
+				console.debug("background-color: "+color+" ;")
+				document.getElementById("bd").setAttribute("style","background-color: "+color+" ;");
+			}
+			
+			function no_negative(num) {
+				if (num>0) {
+					return num ;
+				} else {
+					return 0 ;
+				}
+			}
+			
+			function fromto(min,org,max) {
+				if (org <= max && org >= min) {
+					return true ;
+				} else {
+					return false ;
+				}
+			}
+			
+			function toSec(hourw,minw,secw) {
+				return (hourw * 3600) + (minw * 60) + (secw) ;
+			}
+			
+			function len2(intCop) {
+				var strCop = "" ;
+				strCop += intCop ;
+				if (strCop.length == 1) {
+					strCop = "0" + strCop
+				}
+				return strCop ;
+			}
+			
+			function secstr(secn) {
+				var temp9923 = "" ;
+				
+				secn = no_negative(secn) ;
+				
+				var sect = secn % 60 ;
+				var mint = Math.floor(secn / 60);
+				
+				temp9923 = mint + "\'" + len2(sect) + "\""
+				 
+				return temp9923 ;
+			}
+			
+			var secaft ;
+			var toAft = "" ;
+			var rawdate ;
+			var sec,min,hr;
+			var ud = "上课" ;
+			var cls = "第一亿节课" ;
+			var hidexk = true ;
+			
+			function showtime() {
+				rawdate = new Date() ;
+				
+				var date = "";
+				 
+				sec = rawdate.getSeconds();
+				min = rawdate.getMinutes() ;
+				hr = rawdate.getHours() ;
+				
+				// hr = 22
+				// min = 20
+				// sec = 39
+				
+				//datesec = toSec(hr,min,sec);
+				
+				secaft = toSec(hr,min,sec) ;
+				
+				toAft = secstr(schedule.end_time-toSec(hr,min,sec)) ;
+				for (var ti=0;ti < schedule.schedule.length;ti++) {
+					var ns = toSec(schedule.schedule[ti].start[0],
+						schedule.schedule[ti].start[1],
+						schedule.schedule[ti].start[2])
+					if (secaft < ns) {
+						toAft = secstr(ns-secaft);
+						ud = schedule.schedule[ti].ud
+						changebgc(schedule.schedule[ti].bgc);
+						cls = schedule.schedule[ti].cls
+						break;
+					}
+				}
+				
+				// if (secaft < toSec(10,30,0)) {
+				// 	toAft = secstr(toSec(10,30,0) - secaft) ;
+				// 	ud = "开课";
+				// 	changebgc("#000070");
+				// } else if (secaft < toSec(12,30,0)) {
+				// 	toAft = secstr(toSec(12,30,0) - secaft) ;
+				// 	ud = "放学";
+				// 	changebgc("#007000");
+				// } else {
+				// 	changebgc("#000070")
+				// }
+				
+				date = len2(hr) + ":" + len2(min) + " "  + len2(sec) + "\"";
+				document.getElementById("nowtime").innerHTML = date;
+				document.getElementById("totime").innerHTML = toAft;
+				document.getElementById("ud").innerHTML = ud;
+				document.getElementById("nowcls").innerHTML = cls;
+			}
+			
+		</script>
+		
+		<title></title>
+	</head>
+	<body style="background-color : #007 ; overflow: hidden;" class="bdc" id="bd">
+		<div class="green">
+			<a id="nowtime">22:45</a>
+			<br/>
+			<a id="nowcls"></a>
+			
+			<hr style="border:5px solid white"/>
+			
+			<a id="xk" hidden=1>
+				sdsd
+			</a>
+			<br/>
+			
+			<a style="font-size: 75px;">距离
+				<a id="ud">下课</a>
+			</a>
+			<br />
+			<a id="totime">8'36"</a>
+		</div>
+		
+		<script>
+			var isXiake = true ; 
+			setInterval(showtime,100)
+		</script>
+		
+	</body>
+</html>
