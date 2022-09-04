@@ -27,11 +27,11 @@
 		
 		<script>
 			var schedule = JSON.parse(
-				'{ "end_time" : 57600, "schedule" : [ { "start":[8,30,0], "ud":"开学", "cls":"课前", "bgc":"#000070" }, { "start":[9,0,0], "ud":"下节", "cls":"早读", "bgc":"#004040" }, { "start":[9,40,0], "ud":"下课", "cls":"第1节", "bgc":"#007000" },'
-				+' { "start":[10,20,0], "ud":"下课", "cls":"体育锻炼", "bgc":"#004040" }, { "start":[10,30,0], "ud":"上课", "cls":"下课", "bgc":"#000070" }, { "start":[11,10,0], "ud":"下课", "cls":"第2节", "bgc":"#007000" }, { "start":[11,30,0], "ud":'
-				+'"午间", "cls":"小结", "bgc":"#004040" }, { "start":[14,0,0], "ud":"开课", "cls":"午间", "bgc":"#000070" }, { "start":[14,10,0], "ud":"上课", "cls":"十分钟", "bgc":"#004040" }, { "start":[14,50,0], "ud":"下课", "cls":"第3节", "bgc":"#0'
-				+'07000" }, { "start":[15,0,0], "ud":"完成", "cls":"眼保", "bgc":"#004040" }, { "start":[15,10,0], "ud":"上课", "cls":"下课", "bgc":"#000070" }, { "start":[15,50,0], "ud":"下课", "cls":"第4节", "bgc":"#007000" }, { "start":[16,0,0], "ud'
-				+'":"放学", "cls":"小结", "bgc":"#004040" } ] }'
+				'{ "end_time" : 61200, "default" : { "ud":"放学", "cls":"放学啦", "bgc":"b" }, "schedule" : [ { "start":[8,0,0], "ud":"开学", "cls":"课前", "bgc":"b" }, { "start":[8,20,0], "ud":"上课", "cls":"早读", "bgc":"c" }, '
+				+'{ "start":[9,0,0], "ud":"下课", "cls":"第1节", "bgc":"g" }, { "start":[9,15,0], "ud":"上课", "cls":"下课", "bgc":"b" }, { "start":[9,55,0], "ud":"下课", "cls":"第2节", "bgc":"g" }, { "start":[10,25,0], "ud":"上课", "cls":"大课间", "bgc":"c" }, '
+				+'{ "start":[11,5,0], "ud":"下课", "cls":"第3节", "bgc":"g" }, { "start":[11,20,0], "ud":"上课", "cls":"下课", "bgc":"b" }, { "start":[12,0,0], "ud":"午间", "cls":"第4节", "bgc":"g" }, { "start":[14,20,0], "ud":"开课", "cls":"午间", "bgc":"b" }, '
+				+'{ "start":[14,30,0], "ud":"上课", "cls":"眼保", "bgc":"c" }, { "start":[15,10,0], "ud":"下课", "cls":"第5节", "bgc":"g" }, { "start":[15,25,0], "ud":"上课", "cls":"下课", "bgc":"b" }, { "start":[16,5,0], "ud":"下节", "cls":"第6节", "bgc":"g" }, '
+				+'{ "start":[17,0,0], "ud":"放学", "cls":"整理", "bgc":"c" } ] }'
 			);
 			
 			
@@ -39,8 +39,12 @@
 			var bodyh = document.getElementById("bd") ;
 			
 			function changebgc(color) {
-				console.debug("background-color: "+color+" ;")
-				document.getElementById("bd").setAttribute("style","background-color: "+color+" ;");
+				var colorA = color ;
+				if (color == "g") {colorA = "#007000";} else
+				if (color == "b") {colorA = "#000070";} else
+				if (color == "c") {colorA = "#004040";}
+				console.debug("background-color: "+colorA+" ;")
+				document.getElementById("bd").setAttribute("style","background-color: "+colorA+" ;");
 			}
 			
 			function no_negative(num) {
@@ -111,19 +115,24 @@
 				secaft = toSec(hr,min,sec) ;
 				
 				toAft = secstr(schedule.end_time-toSec(hr,min,sec)) ;
+				var cbgc = schedule.default.bgc;
+				ud = schedule.default.ud;
+				cls = schedule.default.cls;
+
 				for (var ti=0;ti < schedule.schedule.length;ti++) {
 					var ns = toSec(schedule.schedule[ti].start[0],
 						schedule.schedule[ti].start[1],
 						schedule.schedule[ti].start[2])
 					if (secaft < ns) {
 						toAft = secstr(ns-secaft);
-						ud = schedule.schedule[ti].ud
-						changebgc(schedule.schedule[ti].bgc);
-						cls = schedule.schedule[ti].cls
+						ud = schedule.schedule[ti].ud;
+						cbgc = schedule.schedule[ti].bgc;
+						cls = schedule.schedule[ti].cls;
 						break;
 					}
 				}
-				
+				changebgc(cbgc);
+
 				// if (secaft < toSec(10,30,0)) {
 				// 	toAft = secstr(toSec(10,30,0) - secaft) ;
 				// 	ud = "开课";
