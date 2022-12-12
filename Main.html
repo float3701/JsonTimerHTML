@@ -26,28 +26,9 @@
 		</style>
 		<title>小雷瀚的上课计时器</title>
 		
+		<script src="json.js"></script>
 		<script>
-			var schedule = { 
-				"end_time" : 61200, 
-				"default" : { "ud":"放学", "cls":"放学啦", "bgc":"b" },
-				"schedule" : [
-					{ "start":[8,0,0], "ud":"开学", "cls":"课前", "bgc":"b" }, 
-					{ "start":[8,20,0], "ud":"上课", "cls":"早读", "bgc":"c" }, 
-					{ "start":[9,0,0], "ud":"下课", "cls":"第1节", "bgc":"g" }, 
-					{ "start":[9,15,0], "ud":"上课", "cls":"下课", "bgc":"b" }, 
-					{ "start":[9,55,0], "ud":"下课", "cls":"第2节", "bgc":"g" }, 
-					{ "start":[10,25,0], "ud":"上课", "cls":"大课间", "bgc":"c" }, 
-					{ "start":[11,5,0], "ud":"下课", "cls":"第3节", "bgc":"g" }, 
-					{ "start":[11,20,0], "ud":"上课", "cls":"下课", "bgc":"b" }, 
-					{ "start":[12,0,0], "ud":"午间", "cls":"第4节", "bgc":"g" }, 
-					{ "start":[14,20,0], "ud":"开课", "cls":"午间", "bgc":"b" }, 
-					{ "start":[14,30,0], "ud":"上课", "cls":"眼保", "bgc":"c" }, 
-					{ "start":[15,10,0], "ud":"下课", "cls":"第5节", "bgc":"g" }, 
-					{ "start":[15,25,0], "ud":"上课", "cls":"下课", "bgc":"b" }, 
-					{ "start":[16,5,0], "ud":"下节", "cls":"第6节", "bgc":"g" }, 
-					{ "start":[17,0,0], "ud":"放学", "cls":"自习", "bgc":"c" } 
-				] 
-			};
+			
 			
 			
 			
@@ -58,7 +39,6 @@
 				if (color == "g") {colorA = "#007000";} else
 				if (color == "b") {colorA = "#000070";} else
 				if (color == "c") {colorA = "#004040";}
-				console.debug("background-color: "+colorA+" ;")
 				document.getElementById("bd").setAttribute("style","background-color: "+colorA+" ;");
 			}
 			
