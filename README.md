@@ -1,5 +1,6 @@
 # JsonTimerHTML
 This is default for my school's online class <br/>
+!!! Do not use before editing json.js into your own schedule !!! <br/>
 `-- CHINESE WARNING --`
 
 ## Main.html

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			body {
+				padding: 0px;
+				margin: 0px;
+				background-color: rgba(0,0,0,0);
+			}
+			
+			td {
+				border: 6px solid #333;
+				min-width: 100px;
+				text-align: center;
+				background-color: #eee;
+				box-shadow: 10px 10px 6px #666;
+				font-size: 30px;
+			}
+		</style>
+		<script src="json.js"></script>
+		<title>课表</title>
+	</head>
+	<body>
+		<table id="table">
+		</table>
+		
+		<script>
+			tb = document.getElementById("table")
+			function newtd(text) {
+				var tr = document.createElement("tr");
+				var td = document.createElement("td");
+				var node = document.createTextNode(text);
+				
+				td.appendChild(node);
+				tr.appendChild(td);
+				tb.appendChild(tr);
+			}
+			
+			for(var p=0;p < classList.length;p++){
+				if (lunch==p) {
+					tb.appendChild(document.createElement("br"));
+				}
+				newtd(classList[p]);
+			}
+		</script>
+	</body>
+</html>
